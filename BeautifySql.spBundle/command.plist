@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>author</key>
+	<string>Nhat Tran</string>
+	<key>category</key>
+	<string>Query Editor</string>
+	<key>command</key>
+	<string>#!/usr/bin/php
+&lt;?php
+
+error_reporting(0);
+
+function output($content)
+{
+    $content = str_replace("\n", '___EOL___', $content);
+    $content = escapeshellarg($content);
+    $cmd = 'echo ' .  $content;
+    // echo ($cmd);die;
+    shell_exec($cmd);
+}
+
+function createPayload($sql)
+{
+    $sql = trim($sql);
+
+    if (empty($sql)) {
+        return false;
+    }
+
+    $xml = '&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;sqlpp_request&gt;
+    &lt;clientid&gt;dpriver-9094-8133-2031&lt;/clientid&gt;
+    &lt;dbvendor&gt;mysql&lt;/dbvendor&gt;
+    &lt;outputfmt&gt;SQL&lt;/outputfmt&gt;
+    &lt;inputsql&gt;&lt;/inputsql&gt;
+    &lt;formatoptions&gt;
+        &lt;keywordcs&gt;Uppercase&lt;/keywordcs&gt;
+        &lt;tablenamecs&gt;Lowercase&lt;/tablenamecs&gt;
+        &lt;columnnamecs&gt;Lowercase&lt;/columnnamecs&gt;
+        &lt;functioncs&gt;InitCap&lt;/functioncs&gt;
+        &lt;datatypecs&gt;Uppercase&lt;/datatypecs&gt;
+        &lt;variablecs&gt;Unchanged&lt;/variablecs&gt;
+        &lt;aliascs&gt;Unchanged&lt;/aliascs&gt;
+        &lt;quotedidentifiercs&gt;Unchanged&lt;/quotedidentifiercs&gt;
+        &lt;identifiercs&gt;Lowercase&lt;/identifiercs&gt;
+        &lt;lnbrwithcomma&gt;after&lt;/lnbrwithcomma&gt;
+        &lt;liststyle&gt;stack&lt;/liststyle&gt;
+        &lt;salign&gt;sleft&lt;/salign&gt;
+        &lt;quotechar&gt;"&lt;/quotechar&gt;
+        &lt;maxlenincm&gt;80&lt;/maxlenincm&gt;
+    &lt;/formatoptions&gt;
+&lt;/sqlpp_request&gt;
+';
+
+    $doc = new DomDocument('1.0', 'utf-8');
+    $doc-&gt;loadXML($xml);
+    $xpath = new DOMXpath($doc);
+    $nodes = $xpath-&gt;query('//inputsql');
+
+    if (empty($nodes-&gt;length)) {
+        return false;
+    }
+
+    $inputsql = new DomText($sql);
+
+    $node = $nodes-&gt;item(0);
+    $node-&gt;appendChild($inputsql);
+
+    return $doc-&gt;saveXML();
+}
+
+function parseResponse($xml)
+{
+    if (empty($xml)) {
+        return false;
+    }
+
+    $doc = new DomDocument('1.0', 'utf-8');
+    $doc-&gt;loadXML($xml);
+    $xpath = new DOMXpath($doc);
+
+    $nodes = $xpath-&gt;query('//retmessage');
+    $message = $nodes-&gt;length ? $nodes-&gt;item(0)-&gt;textContent : '';
+
+    if ($message != 'success') {
+        return false;
+    }
+
+    $nodes = $xpath-&gt;query('//formattedsql');
+    $sql = $nodes-&gt;length ? trim($nodes-&gt;item(0)-&gt;textContent) : '';
+
+    return $sql;
+}
+
+function beautify($sql)
+{
+    $payload = createPayload($sql);
+
+    if (empty($payload)) {
+        return false;
+    }
+
+    $url = 'http://www.dpriver.com/cgi-bin/ppserver';
+    // Prepare to connect to dpriver.
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_VERBOSE, 0);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+    $result = curl_exec($ch);
+
+    if (!$result) {
+        return $sql;
+    }
+
+    $beautifiedSql = parseResponse($result);
+
+    return empty($beautifiedSql) ? $sql : $beautifiedSql;
+}
+
+ob_start();
+
+while ($buf = fgets(STDIN)) {
+    echo $buf;
+}
+
+$sql = trim(ob_get_clean());
+
+if (empty($sql)) {
+    return;
+}
+
+$sql = beautify($sql);
+echo $sql;
+</string>
+	<key>contact</key>
+	<string>aung.gena@vafcver.ia</string>
+	<key>input</key>
+	<string>selectedtext</string>
+	<key>input_fallback</key>
+	<string>currentquery</string>
+	<key>internalKeyEquivalent</key>
+	<dict>
+		<key>characters</key>
+		<string>H</string>
+		<key>keyCode</key>
+		<integer>4</integer>
+		<key>modifierFlags</key>
+		<integer>1179648</integer>
+	</dict>
+	<key>keyEquivalent</key>
+	<string>$@H</string>
+	<key>name</key>
+	<string>Beautify SQL</string>
+	<key>output</key>
+	<string>insertassnippet</string>
+	<key>scope</key>
+	<string>inputfield</string>
+	<key>tooltip</key>
+	<string>Beautify SQL Query</string>
+	<key>uuid</key>
+	<string>10FBD84B-A399-411E-9ECF-21FEBBC8E219</string>
+</dict>
+</plist>
