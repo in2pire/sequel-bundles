@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>category</key>
+	<string>Copy</string>
+	<key>command</key>
+	<string>#!/usr/bin/php
+&lt;?php
+
+function copyToClipboard($content)
+{
+    $cmd = 'echo '.  escapeshellarg($content) . ' | __CF_USER_TEXT_ENCODING=' . posix_getuid() . ':0x8000100:0x8000100 pbcopy';
+    shell_exec($cmd);
+}
+
+$stdIn = fopen('php://stdin', 'r');
+$result = array();
+
+while ($row = fgetcsv($stdIn, 0)) {
+    $result[] = $row;
+}
+
+$columns = array_shift($result);
+
+foreach ($result as $key =&gt; $data) {
+    $result[$key] = array_combine($columns, $data);
+}
+
+$count = count($result);
+
+if ($count) {
+    if ($count == 1) {
+        $result = reset($result);
+    }
+
+    copyToClipboard(var_export($result, true));
+}
+</string>
+	<key>input</key>
+	<string>selectedtablerowsascsv</string>
+	<key>keyEquivalent</key>
+	<string></string>
+	<key>name</key>
+	<string>Copy As PHP Array</string>
+	<key>scope</key>
+	<string>datatable</string>
+	<key>tooltip</key>
+	<string>Copy selected rows as PHP array</string>
+	<key>uuid</key>
+	<string>9C8C9BF8-A472-4536-B6ED-AF49D34F0A7C</string>
+	<key>withblob</key>
+	<string>include</string>
+</dict>
+</plist>
