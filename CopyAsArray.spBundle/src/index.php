@@ -1,5 +1,12 @@
-#!/usr/bin/php
 <?php
+
+/**
+ * Copy as PHP Array.
+ *
+ * @package In2pire
+ * @subpackage CopyAsDeserializedArray
+ * @author Nhat Tran <nhat.tran@inspire.vn>
+ */
 
 function copyToClipboard($content)
 {

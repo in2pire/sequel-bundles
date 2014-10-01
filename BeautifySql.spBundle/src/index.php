@@ -1,5 +1,12 @@
-#!/usr/bin/php
 <?php
+
+/**
+ * Beautify SQL Query.
+ *
+ * @package In2pire
+ * @subpackage BeautifySql
+ * @author Nhat Tran <nhat.tran@inspire.vn>
+ */
 
 error_reporting(0);
 
