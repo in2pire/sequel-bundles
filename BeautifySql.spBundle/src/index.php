@@ -8,6 +8,8 @@
  * @author Nhat Tran <nhat.tran@inspire.vn>
  */
 
+error_reporting(0);
+
 // Define App Environment constants.
 define('APP_ROOT', dirname(__FILE__));
 chdir(APP_ROOT);

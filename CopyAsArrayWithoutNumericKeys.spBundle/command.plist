@@ -9,16 +9,14 @@
 /usr/bin/env php "$SP_BUNDLE_PATH/src/index.php"</string>
 	<key>input</key>
 	<string>selectedtablerowsastab</string>
-	<key>keyEquivalent</key>
-	<string></string>
 	<key>name</key>
-	<string>Copy As PHP Array</string>
+	<string>Copy As PHP Array without numeric keys</string>
 	<key>scope</key>
 	<string>datatable</string>
 	<key>tooltip</key>
-	<string>Copy selected rows as PHP array</string>
+	<string>Copy selected rows as PHP array without numeric keys</string>
 	<key>uuid</key>
-	<string>9C8C9BF8-A472-4536-B6ED-AF49D34F0A7C</string>
+	<string>34A7D0D5-0B78-41E8-933D-8A38BB9CDCDF</string>
 	<key>withblob</key>
 	<string>include</string>
 </dict>

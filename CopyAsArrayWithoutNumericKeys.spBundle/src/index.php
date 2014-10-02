@@ -39,9 +39,8 @@ function cleanCsvData($value)
 function cleanExportArray($array)
 {
     $output = var_export($array, true);
-    // Just for testing.
-    // $output = preg_replace('#([\t ]*)\d+\s=>\s*#', '\\1', $output);
-    // $output = preg_replace('#=> \n[\t ]*array \(\n#', "=> array(\n", $output);
+    $output = preg_replace('#([\t ]*)\d+\s=>\s*#', '\\1', $output);
+    $output = preg_replace('#=> \n[\t ]*array \(\n#', "=> array(\n", $output);
     return $output;
 }
 

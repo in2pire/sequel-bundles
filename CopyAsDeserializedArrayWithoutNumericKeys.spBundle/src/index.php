@@ -14,6 +14,7 @@ define('C_TAB', "\t");
 define('C_NEWLINE', "\n");
 define('C_ESCAPED_TAB', '⇥');
 define('C_ESCAPED_NEWLINE', '↵');
+define('SERIALIZED_FALSE', serialize(false));
 
 function copyToClipboard($content)
 {
@@ -33,15 +34,22 @@ function cleanCsvData($value)
 {
     $value = str_replace(C_ESCAPED_TAB, C_TAB, $value);
     $value = str_replace(C_NEWLINE, C_ESCAPED_NEWLINE, $value);
-    return $value;
+
+    $unserializedValue = @unserialize($value);
+
+    // String is not serialized.
+    if ($value != SERIALIZED_FALSE && $unserializedValue === false) {
+        return $value;
+    }
+
+    return $unserializedValue;
 }
 
 function cleanExportArray($array)
 {
     $output = var_export($array, true);
-    // Just for testing.
-    // $output = preg_replace('#([\t ]*)\d+\s=>\s*#', '\\1', $output);
-    // $output = preg_replace('#=> \n[\t ]*array \(\n#', "=> array(\n", $output);
+    $output = preg_replace('#([\t ]*)\d+\s=>\s*#', '\\1', $output);
+    $output = preg_replace('#=> \n[\t ]*array \(\n#', "=> array(\n", $output);
     return $output;
 }
 

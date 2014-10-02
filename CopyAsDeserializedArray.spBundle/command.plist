@@ -2,23 +2,25 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>author</key>
+	<string>Nhat Tran</string>
 	<key>category</key>
 	<string>Copy</string>
 	<key>command</key>
 	<string>#!/bin/bash
 /usr/bin/env php "$SP_BUNDLE_PATH/src/index.php"</string>
+	<key>contact</key>
+	<string>aung.gena@vafcver.ia</string>
 	<key>input</key>
 	<string>selectedtablerowsastab</string>
-	<key>keyEquivalent</key>
-	<string></string>
 	<key>name</key>
-	<string>Copy As PHP Array</string>
+	<string>Copy As Deserialized Array</string>
 	<key>scope</key>
 	<string>datatable</string>
 	<key>tooltip</key>
-	<string>Copy selected rows as PHP array</string>
+	<string>Copy selected rows as Deserialized PHP array</string>
 	<key>uuid</key>
-	<string>9C8C9BF8-A472-4536-B6ED-AF49D34F0A7C</string>
+	<string>C748EC42-D3EB-4C25-B139-14F5341B727B</string>
 	<key>withblob</key>
 	<string>include</string>
 </dict>

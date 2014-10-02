@@ -12,13 +12,13 @@
 	<key>keyEquivalent</key>
 	<string></string>
 	<key>name</key>
-	<string>Copy As PHP Array</string>
+	<string>Copy As Deserialized Array without  numeric keys</string>
 	<key>scope</key>
 	<string>datatable</string>
 	<key>tooltip</key>
-	<string>Copy selected rows as PHP array</string>
+	<string>Copy selected rows as Deserialized PHP array without numeric keys</string>
 	<key>uuid</key>
-	<string>9C8C9BF8-A472-4536-B6ED-AF49D34F0A7C</string>
+	<string>C42DDDFA-CC58-4E57-8655-8F0B8F75DE52</string>
 	<key>withblob</key>
 	<string>include</string>
 </dict>
