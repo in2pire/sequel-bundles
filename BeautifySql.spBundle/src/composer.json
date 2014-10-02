@@ -1,0 +1,19 @@
+{
+    "name": "in2pire/sequel-bundle-beautify-sql",
+    "description": "Beautify SQL Query",
+    "type": "project",
+    "version": "1.0.0-dev",
+    "require": {
+        "jdorn/sql-formatter": ">=1.0.1"
+    },
+    "homepage": "http://inspire.vn/",
+    "authors": [
+        {
+            "name": "Nhat Tran",
+            "email": "nhat.tran@inspire.vn"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"In2pire": "app/"}
+    }
+}
