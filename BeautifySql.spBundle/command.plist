@@ -7,12 +7,8 @@
 	<key>category</key>
 	<string>Query Editor</string>
 	<key>command</key>
-	<string>#!/usr/bin/php
-&lt;?php
-
-$bundlePath = getenv('SP_BUNDLE_PATH');
-
-include $bundlePath . '/src/index.php';</string>
+	<string>#!/bin/bash
+/usr/bin/env php "$SP_BUNDLE_PATH/src/index.php"</string>
 	<key>contact</key>
 	<string>aung.gena@vafcver.ia</string>
 	<key>input</key>
